@@ -239,10 +239,15 @@
       }
 
       const index = Math.floor(angle / slice);
-
-      result.textContent =
-        "🎉 You won: " + prizes[index] + "!";
-    }
+result.innerHTML =
+  "🎉 Congratulations! You won: <strong>" +
+  prizes[index] +
+  "</strong>!<br><br>" +
+  '<a href="https://t.me/Privatefanchat65" target="_blank" ' +
+  'style="display:inline-block;padding:14px 25px;background:#229ED9;color:white;' +
+  'text-decoration:none;border-radius:30px;font-weight:bold;">' +
+  '📲 CONTACT ME ON TELEGRAM</a>';
+      
 
     button.addEventListener("click", spin);
 
