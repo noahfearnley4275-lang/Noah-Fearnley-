@@ -3,349 +3,363 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>NOAH FEARNLEY GIVEAWAY</title>
+<title>Gift Hub</title>
 
 <style>
-* {
-  box-sizing: border-box;
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
 }
 
-body {
-  margin: 0;
-  min-height: 100vh;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #111633, #252b70);
-  color: white;
-  text-align: center;
+body{
+  background:linear-gradient(180deg,#10152d,#080b18);
+  color:white;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
 }
 
-.container {
-  max-width: 700px;
-  margin: auto;
-  padding: 20px 10px 50px;
+.game{
+  width:100%;
+  max-width:480px;
+  min-height:100vh;
+  padding:18px;
+  text-align:center;
 }
 
-h1 {
-  font-size: clamp(30px, 8vw, 55px);
-  margin: 10px 0;
-  font-weight: 900;
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
 }
 
-.subtitle {
-  font-size: 21px;
-  margin-bottom: 20px;
+.logo{
+  font-size:24px;
+  font-weight:bold;
 }
 
-.wheel-area {
-  position: relative;
-  width: min(94vw, 600px);
-  height: min(94vw, 600px);
-  margin: auto;
+.level{
+  background:#202747;
+  padding:8px 14px;
+  border-radius:20px;
+  font-size:13px;
 }
 
-canvas {
-  width: 100%;
-  height: 100%;
-  display: block;
+.balance{
+  margin-top:15px;
 }
 
-.pointer {
-  position: absolute;
-  top: -3px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 32px solid transparent;
-  border-right: 32px solid transparent;
-  border-top: 65px solid white;
-  filter: drop-shadow(0 4px 4px black);
-  z-index: 5;
+.balance-title{
+  color:#9da7c5;
+  font-size:14px;
 }
 
-#spinButton {
-  margin-top: 25px;
-  width: min(85vw, 500px);
-  padding: 20px;
-  border: none;
-  border-radius: 50px;
-  background: #ffd21c;
-  color: #000;
-  font-size: 36px;
-  font-weight: 900;
-  cursor: pointer;
+.money{
+  font-size:48px;
+  font-weight:800;
+  margin:5px 0;
 }
 
-#spinButton:disabled {
-  opacity: 0.6;
+.coin-name{
+  color:#ffd84d;
+  font-weight:bold;
 }
 
-#result {
-  margin: 25px auto;
-  min-height: 70px;
-  font-size: 30px;
-  font-weight: 900;
+.energy{
+  margin:25px 0 15px;
+}
+
+.energy-top{
+  display:flex;
+  justify-content:space-between;
+  color:#aeb7d1;
+  font-size:13px;
+  margin-bottom:7px;
+}
+
+.energy-bar{
+  height:12px;
+  background:#272e4d;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.energy-fill{
+  height:100%;
+  width:100%;
+  background:#ffd84d;
+  transition:.2s;
+}
+
+.tap-area{
+  margin:25px auto;
+}
+
+.tap-button{
+  width:220px;
+  height:220px;
+  border-radius:50%;
+  border:8px solid #3b456e;
+  background:radial-gradient(circle,#ffe978,#ffbd24);
+  box-shadow:0 15px 40px rgba(255,195,40,.25);
+  font-size:90px;
+  cursor:pointer;
+  transition:.08s;
+}
+
+.tap-button:active{
+  transform:scale(.92);
+}
+
+.tap-text{
+  margin-top:12px;
+  color:#9da7c5;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:25px;
+}
+
+.card{
+  background:#171d38;
+  border:1px solid #2b3458;
+  border-radius:16px;
+  padding:16px;
+  text-align:left;
+}
+
+.card-title{
+  color:#9da7c5;
+  font-size:12px;
+  margin-bottom:6px;
+}
+
+.card-value{
+  font-size:20px;
+  font-weight:bold;
+}
+
+button.action{
+  width:100%;
+  border:0;
+  border-radius:12px;
+  padding:12px;
+  margin-top:10px;
+  background:#ffd84d;
+  color:#171717;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button.action:disabled{
+  opacity:.5;
+}
+
+.nav{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-top:20px;
+}
+
+.nav button{
+  padding:12px 5px;
+  border:1px solid #2b3458;
+  border-radius:12px;
+  background:#171d38;
+  color:white;
+  cursor:pointer;
+}
+
+.message{
+  min-height:22px;
+  margin-top:12px;
+  color:#ffd84d;
+  font-size:13px;
+}
+
+.float{
+  position:fixed;
+  pointer-events:none;
+  font-weight:bold;
+  color:#ffd84d;
+  animation:up 700ms ease-out forwards;
+}
+
+@keyframes up{
+  0%{opacity:1;transform:translateY(0)}
+  100%{opacity:0;transform:translateY(-80px)}
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="game">
 
-<h1>🎉 NOAH FEARNLEY GIVEAWAY 🎉</h1>
+  <div class="header">
+    <div class="logo">🎁 Gift Hub</div>
+    <div class="level">Level <span id="level">1</span></div>
+  </div>
 
-<div class="subtitle">
-Spin the wheel and see what you win!
-</div>
+  <div class="balance">
+    <div class="balance-title">YOUR GIFT HUB BALANCE</div>
+    <div class="money" id="balance">$0</div>
+    <div class="coin-name">GIFT COINS</div>
+  </div>
 
-<div class="wheel-area">
-  <div class="pointer"></div>
-  <canvas id="wheel"></canvas>
-</div>
+  <div class="energy">
+    <div class="energy-top">
+      <span>⚡ Energy</span>
+      <span id="energyText">100 / 100</span>
+    </div>
 
-<button id="spinButton">SPIN</button>
+    <div class="energy-bar">
+      <div class="energy-fill" id="energyFill"></div>
+    </div>
+  </div>
 
-<div id="result"></div>
+  <div class="tap-area">
+
+    <button class="tap-button" id="tapButton">
+      🎁
+    </button>
+
+    <div class="tap-text">
+      TAP THE GIFT TO EARN
+    </div>
+
+  </div>
+
+  <div class="message" id="message">
+    Start tapping to collect Gift Coins!
+  </div>
+
+  <div class="cards">
+
+    <div class="card">
+      <div class="card-title">COINS PER TAP</div>
+      <div class="card-value">🪙 <span id="perTap">1</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">TOTAL TAPS</div>
+      <div class="card-value" id="totalTaps">0</div>
+    </div>
+
+  </div>
+
+  <div class="card" style="margin-top:12px;text-align:center">
+
+    <div class="card-title">
+      UPGRADE YOUR GIFT
+    </div>
+
+    <div class="card-value">
+      Level <span id="upgradeLevel">1</span>
+    </div>
+
+    <button class="action" id="upgradeButton">
+      Upgrade — 10 coins
+    </button>
+
+  </div>
+
+  <div class="nav">
+
+    <button id="dailyButton">
+      🎁<br>Daily
+    </button>
+
+    <button id="missionButton">
+      🎯<br>Missions
+    </button>
+
+    <button id="referralButton">
+      👥<br>Invite
+    </button>
+
+  </div>
 
 </div>
 
 <script>
 
-const canvas = document.getElementById("wheel");
-const ctx = canvas.getContext("2d");
-const button = document.getElementById("spinButton");
-const result = document.getElementById("result");
+let coins = 0;
+let energy = 100;
+let maxEnergy = 100;
+let coinsPerTap = 1;
+let totalTaps = 0;
+let level = 1;
+let upgradeCost = 10;
 
-const prizes = [
-  "$20,000",
-  "$10,000",
-  "$5,000",
-  "$2,000",
-  "$1,000",
-  "$500",
-  "VILLA",
-  "CAR"
-];
+const balance = document.getElementById("balance");
+const energyText = document.getElementById("energyText");
+const energyFill = document.getElementById("energyFill");
+const perTap = document.getElementById("perTap");
+const totalTapsDisplay = document.getElementById("totalTaps");
+const levelDisplay = document.getElementById("level");
+const upgradeLevel = document.getElementById("upgradeLevel");
+const upgradeButton = document.getElementById("upgradeButton");
+const message = document.getElementById("message");
+const tapButton = document.getElementById("tapButton");
 
-const colors = [
-  "#e91e63",
-  "#673ab7",
-  "#ff9800",
-  "#2196f3",
-  "#00a86b",
-  "#f44336",
-  "#ff5722",
-  "#009688"
-];
+function update(){
 
-let rotation = 0;
-let spinning = false;
+  balance.textContent = "$" + coins.toLocaleString();
 
-function setupCanvas() {
+  energyText.textContent =
+    energy + " / " + maxEnergy;
 
-  const size = Math.min(window.innerWidth * 0.94, 600);
-  const dpr = window.devicePixelRatio || 1;
+  energyFill.style.width =
+    (energy / maxEnergy * 100) + "%";
 
-  canvas.width = size * dpr;
-  canvas.height = size * dpr;
+  perTap.textContent = coinsPerTap;
 
-  canvas.style.width = size + "px";
-  canvas.style.height = size + "px";
+  totalTapsDisplay.textContent =
+    totalTaps.toLocaleString();
 
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  levelDisplay.textContent = level;
 
-  drawWheel(size);
+  upgradeLevel.textContent = level;
+
+  upgradeButton.textContent =
+    "Upgrade — " + upgradeCost + " coins";
+
 }
 
-function drawWheel(size) {
-
-  const center = size / 2;
-  const radius = size / 2 - 8;
-  const slice = (Math.PI * 2) / prizes.length;
-
-  ctx.clearRect(0, 0, size, size);
-
-  ctx.save();
-
-  ctx.translate(center, center);
-  ctx.rotate(rotation);
-
-  for (let i = 0; i < prizes.length; i++) {
-
-    const start = i * slice - Math.PI / 2;
-    const end = start + slice;
-
-    /* Draw section */
-
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    ctx.arc(0, 0, radius, start, end);
-    ctx.closePath();
-
-    ctx.fillStyle = colors[i];
-    ctx.fill();
-
-    ctx.strokeStyle = "white";
-    ctx.lineWidth = 5;
-    ctx.stroke();
-
-    /* Draw prize */
-
-    ctx.save();
-
-    ctx.rotate(start + slice / 2);
-
-    ctx.translate(radius * 0.62, 0);
-
-    /*
-      Keep the text horizontal and readable.
-    */
-
-    ctx.rotate(-(start + slice / 2));
-
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-
-    let fontSize = 24;
-
-    if (prizes[i].length >= 8) {
-      fontSize = 20;
-    }
-
-    ctx.font = "900 " + fontSize + "px Arial";
-
-    ctx.lineWidth = 5;
-    ctx.strokeStyle = "rgba(0,0,0,0.45)";
-    ctx.fillStyle = "white";
-
-    ctx.strokeText(prizes[i], 0, 0);
-    ctx.fillText(prizes[i], 0, 0);
-
-    ctx.restore();
-  }
-
-  ctx.restore();
-
-  /* Center */
-
-  ctx.beginPath();
-  ctx.arc(center, center, radius * 0.22, 0, Math.PI * 2);
-
-  ctx.fillStyle = "#111633";
-  ctx.fill();
-
-  ctx.strokeStyle = "white";
-  ctx.lineWidth = 5;
-  ctx.stroke();
-
-  ctx.fillStyle = "white";
-  ctx.font = "900 25px Arial";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-
-  ctx.fillText("SPIN", center, center);
-
-  /* Outer border */
-
-  ctx.beginPath();
-  ctx.arc(center, center, radius, 0, Math.PI * 2);
-
-  ctx.strokeStyle = "white";
-  ctx.lineWidth = 8;
-  ctx.stroke();
+function showMessage(text){
+  message.textContent = text;
 }
 
-function spin() {
+function floatingCoins(){
 
-  if (spinning) return;
+  const number = document.createElement("div");
 
-  spinning = true;
-  button.disabled = true;
-  result.innerHTML = "";
+  number.className = "float";
 
-  const size = Math.min(window.innerWidth * 0.94, 600);
+  number.textContent = "+" + coinsPerTap;
 
-  const startRotation = rotation;
+  const rect = tapButton.getBoundingClientRect();
 
-  const turns = 6 + Math.random() * 2;
+  number.style.left =
+    (rect.left + rect.width / 2) + "px";
 
-  const randomFinish = Math.random() * Math.PI * 2;
+  number.style.top =
+    rect.top + "px";
 
-  const finalRotation =
-    startRotation +
-    turns * Math.PI * 2 +
-    randomFinish;
+  document.body.appendChild(number);
 
-  const duration = 5000;
-  const startTime = performance.now();
+  setTimeout(()=>{
+    number.remove();
+  },700);
 
-  function animate(time) {
-
-    const elapsed = time - startTime;
-
-    let progress = elapsed / duration;
-
-    if (progress > 1) {
-      progress = 1;
-    }
-
-    const smooth =
-      1 - Math.pow(1 - progress, 4);
-
-    rotation =
-      startRotation +
-      (finalRotation - startRotation) * smooth;
-
-    drawWheel(size);
-
-    if (progress < 1) {
-
-      requestAnimationFrame(animate);
-
-    } else {
-
-      spinning = false;
-      button.disabled = false;
-
-      showWinner();
-    }
-  }
-
-  requestAnimationFrame(animate);
 }
 
-function showWinner() {
-
-  const slice = (Math.PI * 2) / prizes.length;
-
-  let angle =
-    ((-rotation + Math.PI / 2) %
-      (Math.PI * 2) +
-      Math.PI * 2) %
-    (Math.PI * 2);
-
-  let index = Math.floor(angle / slice);
-
-  if (index >= prizes.length) {
-    index = 0;
-  }
-
-  result.innerHTML =
-    "🎉 CONGRATULATIONS! 🎉<br>" +
-    "You won <strong>" +
-    prizes[index] +
-    "</strong>!";
-}
-
-button.addEventListener("click", spin);
-
-window.addEventListener("resize", setupCanvas);
-
-setupCanvas();
-
-</script>
-
-</body>
-</html>
+tapButton.addEventListener("
