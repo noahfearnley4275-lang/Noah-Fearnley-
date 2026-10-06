@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>NOAH FEARNLEY GIVEAWAY</title>
 
 <style>
@@ -14,27 +15,33 @@ body {
   margin: 0;
   min-height: 100vh;
   font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #11152f, #292d70);
+  background: linear-gradient(135deg, #111633, #252b70);
   color: white;
   text-align: center;
-  overflow-x: hidden;
+}
+
+.container {
+  max-width: 700px;
+  margin: auto;
+  padding: 20px 10px 50px;
 }
 
 h1 {
-  margin: 25px 15px 8px;
-  font-size: 32px;
+  font-size: clamp(30px, 8vw, 55px);
+  margin: 10px 0;
+  font-weight: 900;
 }
 
-p {
-  font-size: 20px;
-  margin: 5px 15px 20px;
+.subtitle {
+  font-size: 21px;
+  margin-bottom: 20px;
 }
 
-#wheelBox {
+.wheel-area {
   position: relative;
-  width: min(92vw, 520px);
-  height: min(92vw, 520px);
-  margin: 10px auto 25px;
+  width: min(94vw, 600px);
+  height: min(94vw, 600px);
+  margin: auto;
 }
 
 canvas {
@@ -43,9 +50,9 @@ canvas {
   display: block;
 }
 
-#pointer {
+.pointer {
   position: absolute;
-  top: -2px;
+  top: -3px;
   left: 50%;
   transform: translateX(-50%);
   width: 0;
@@ -53,66 +60,48 @@ canvas {
   border-left: 32px solid transparent;
   border-right: 32px solid transparent;
   border-top: 65px solid white;
-  filter: drop-shadow(0 4px 4px rgba(0,0,0,.5));
+  filter: drop-shadow(0 4px 4px black);
   z-index: 5;
 }
 
 #spinButton {
-  display: block;
-  margin: 20px auto;
-  width: min(80vw, 500px);
-  padding: 22px;
+  margin-top: 25px;
+  width: min(85vw, 500px);
+  padding: 20px;
   border: none;
-  border-radius: 60px;
-  background: #ffd21a;
+  border-radius: 50px;
+  background: #ffd21c;
   color: #000;
-  font-size: 38px;
-  font-weight: bold;
+  font-size: 36px;
+  font-weight: 900;
   cursor: pointer;
-  box-shadow: 0 8px 20px rgba(0,0,0,.3);
-}
-
-#spinButton:active {
-  transform: scale(.97);
 }
 
 #spinButton:disabled {
-  opacity: .6;
+  opacity: 0.6;
 }
 
 #result {
-  margin: 20px auto 40px;
-  width: 90%;
-  max-width: 550px;
-  font-size: 25px;
-  font-weight: bold;
+  margin: 25px auto;
   min-height: 70px;
-}
-
-@media (max-width: 450px) {
-  h1 {
-    font-size: 27px;
-  }
-
-  p {
-    font-size: 18px;
-  }
-
-  #spinButton {
-    font-size: 32px;
-    padding: 18px;
-  }
+  font-size: 30px;
+  font-weight: 900;
 }
 </style>
 </head>
 
 <body>
 
-<h1>🎉 NOAH FEARNLEY GIVEAWAY 🎉</h1>
-<p>Spin the wheel and see what you win!</p>
+<div class="container">
 
-<div id="wheelBox">
-  <div id="pointer"></div>
+<h1>🎉 NOAH FEARNLEY GIVEAWAY 🎉</h1>
+
+<div class="subtitle">
+Spin the wheel and see what you win!
+</div>
+
+<div class="wheel-area">
+  <div class="pointer"></div>
   <canvas id="wheel"></canvas>
 </div>
 
@@ -120,39 +109,43 @@ canvas {
 
 <div id="result"></div>
 
+</div>
+
 <script>
+
 const canvas = document.getElementById("wheel");
 const ctx = canvas.getContext("2d");
 const button = document.getElementById("spinButton");
 const result = document.getElementById("result");
 
 const prizes = [
-  "₦10,000 CASH",
-  "PHONE",
-  "VILLA AWARD",
-  "CAR",
-  "₦50,000 CASH",
-  "GIFT",
-  "₦100,000 CASH",
-  "TRY AGAIN"
+  "$20,000",
+  "$10,000",
+  "$5,000",
+  "$2,000",
+  "$1,000",
+  "$500",
+  "VILLA",
+  "CAR"
 ];
 
 const colors = [
-  "#e83e8c",
-  "#9b4de8",
-  "#ff9f0a",
-  "#3d82e8",
-  "#20bf55",
-  "#ef4444",
-  "#ff7518",
-  "#18b6aa"
+  "#e91e63",
+  "#673ab7",
+  "#ff9800",
+  "#2196f3",
+  "#00a86b",
+  "#f44336",
+  "#ff5722",
+  "#009688"
 ];
 
 let rotation = 0;
 let spinning = false;
 
-function resizeCanvas() {
-  const size = Math.min(window.innerWidth * 0.92, 520);
+function setupCanvas() {
+
+  const size = Math.min(window.innerWidth * 0.94, 600);
   const dpr = window.devicePixelRatio || 1;
 
   canvas.width = size * dpr;
@@ -167,6 +160,7 @@ function resizeCanvas() {
 }
 
 function drawWheel(size) {
+
   const center = size / 2;
   const radius = size / 2 - 8;
   const slice = (Math.PI * 2) / prizes.length;
@@ -174,12 +168,16 @@ function drawWheel(size) {
   ctx.clearRect(0, 0, size, size);
 
   ctx.save();
+
   ctx.translate(center, center);
   ctx.rotate(rotation);
 
   for (let i = 0; i < prizes.length; i++) {
-    const start = i * slice;
+
+    const start = i * slice - Math.PI / 2;
     const end = start + slice;
+
+    /* Draw section */
 
     ctx.beginPath();
     ctx.moveTo(0, 0);
@@ -190,103 +188,163 @@ function drawWheel(size) {
     ctx.fill();
 
     ctx.strokeStyle = "white";
-    ctx.lineWidth = 4;
+    ctx.lineWidth = 5;
     ctx.stroke();
 
+    /* Draw prize */
+
     ctx.save();
+
     ctx.rotate(start + slice / 2);
 
-    ctx.fillStyle = "white";
-    ctx.font = "bold 18px Arial";
+    ctx.translate(radius * 0.62, 0);
+
+    /*
+      Keep the text horizontal and readable.
+    */
+
+    ctx.rotate(-(start + slice / 2));
+
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
 
-    ctx.fillText(prizes[i], radius * 0.62, 0);
+    let fontSize = 24;
+
+    if (prizes[i].length >= 8) {
+      fontSize = 20;
+    }
+
+    ctx.font = "900 " + fontSize + "px Arial";
+
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = "rgba(0,0,0,0.45)";
+    ctx.fillStyle = "white";
+
+    ctx.strokeText(prizes[i], 0, 0);
+    ctx.fillText(prizes[i], 0, 0);
 
     ctx.restore();
   }
 
   ctx.restore();
 
-  // Center circle
+  /* Center */
+
   ctx.beginPath();
-  ctx.arc(center, center, 65, 0, Math.PI * 2);
-  ctx.fillStyle = "#11152f";
+  ctx.arc(center, center, radius * 0.22, 0, Math.PI * 2);
+
+  ctx.fillStyle = "#111633";
   ctx.fill();
 
+  ctx.strokeStyle = "white";
+  ctx.lineWidth = 5;
+  ctx.stroke();
+
   ctx.fillStyle = "white";
-  ctx.font = "bold 20px Arial";
+  ctx.font = "900 25px Arial";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
+
   ctx.fillText("SPIN", center, center);
+
+  /* Outer border */
+
+  ctx.beginPath();
+  ctx.arc(center, center, radius, 0, Math.PI * 2);
+
+  ctx.strokeStyle = "white";
+  ctx.lineWidth = 8;
+  ctx.stroke();
 }
 
 function spin() {
+
   if (spinning) return;
 
   spinning = true;
   button.disabled = true;
-  result.textContent = "";
+  result.innerHTML = "";
 
-  const size = Math.min(window.innerWidth * 0.92, 520);
+  const size = Math.min(window.innerWidth * 0.94, 600);
 
   const startRotation = rotation;
-  const extraTurns = 5 + Math.random() * 3;
 
-  const randomPrize = Math.floor(Math.random() * prizes.length);
+  const turns = 6 + Math.random() * 2;
 
-  // Make the chosen prize finish underneath the pointer at the top.
-  const slice = (Math.PI * 2) / prizes.length;
-  const targetAngle =
-    -Math.PI / 2 -
-    (randomPrize * slice + slice / 2);
+  const randomFinish = Math.random() * Math.PI * 2;
 
   const finalRotation =
     startRotation +
-    extraTurns * Math.PI * 2 +
-    (targetAngle - startRotation) % (Math.PI * 2);
+    turns * Math.PI * 2 +
+    randomFinish;
 
   const duration = 5000;
   const startTime = performance.now();
 
-  function animate(currentTime) {
-    const elapsed = currentTime - startTime;
-    const progress = Math.min(elapsed / duration, 1);
+  function animate(time) {
 
-    // Smooth slowing down
-    const eased = 1 - Math.pow(1 - progress, 4);
+    const elapsed = time - startTime;
+
+    let progress = elapsed / duration;
+
+    if (progress > 1) {
+      progress = 1;
+    }
+
+    const smooth =
+      1 - Math.pow(1 - progress, 4);
 
     rotation =
       startRotation +
-      (finalRotation - startRotation) * eased;
+      (finalRotation - startRotation) * smooth;
 
     drawWheel(size);
 
     if (progress < 1) {
-      requestAnimationFrame(animate);
-    } else {
-      rotation = finalRotation;
-      drawWheel(size);
 
-      result.innerHTML =
-        "🎉 Congratulations! 🎉<br><br>" +
-        "You won: <strong>" +
-        prizes[randomPrize] +
-        "</strong>";
+      requestAnimationFrame(animate);
+
+    } else {
 
       spinning = false;
       button.disabled = false;
+
+      showWinner();
     }
   }
 
   requestAnimationFrame(animate);
 }
 
+function showWinner() {
+
+  const slice = (Math.PI * 2) / prizes.length;
+
+  let angle =
+    ((-rotation + Math.PI / 2) %
+      (Math.PI * 2) +
+      Math.PI * 2) %
+    (Math.PI * 2);
+
+  let index = Math.floor(angle / slice);
+
+  if (index >= prizes.length) {
+    index = 0;
+  }
+
+  result.innerHTML =
+    "🎉 CONGRATULATIONS! 🎉<br>" +
+    "You won <strong>" +
+    prizes[index] +
+    "</strong>!";
+}
+
 button.addEventListener("click", spin);
 
-window.addEventListener("resize", resizeCanvas);
+window.addEventListener("resize", setupCanvas);
 
-resizeCanvas();
+setupCanvas();
+
 </script>
 
 </body>
