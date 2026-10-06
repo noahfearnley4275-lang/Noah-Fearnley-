@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Gift Hub</title>
 
 <style>
@@ -10,9 +10,9 @@
 
 body{
   margin:0;
-  font-family:Arial,sans-serif;
-  background:linear-gradient(160deg,#080b18,#151b38);
+  background:linear-gradient(160deg,#080b18,#151d3d);
   color:white;
+  font-family:Arial,sans-serif;
 }
 
 .game{
@@ -23,39 +23,55 @@ body{
 }
 
 .logo{
-  font-size:28px;
-  font-weight:bold;
+  font-size:30px;
+  font-weight:900;
   color:#ffd43b;
-  margin-bottom:5px;
 }
 
 .notice{
+  color:#9ca7c5;
   font-size:11px;
-  color:#aab3cf;
-  margin-bottom:15px;
+  margin:7px 0 18px;
 }
 
 .balance{
-  background:#171d38;
-  border:1px solid #30385e;
+  background:#171e3a;
+  border:1px solid #30395f;
   border-radius:20px;
-  padding:20px;
+  padding:18px;
 }
 
 .label{
-  color:#9ba5c4;
+  color:#9ca7c5;
   font-size:13px;
 }
 
 #balance{
-  font-size:46px;
-  font-weight:900;
   color:#ffd43b;
-  margin:8px 0;
+  font-size:44px;
+  font-weight:900;
+  margin:7px;
 }
 
-.tap{
-  margin:25px auto;
-  width:220px;
-  height:220px;
-  border-radius:
+.wheel-box{
+  position:relative;
+  width:320px;
+  max-width:90vw;
+  margin:25px auto 10px;
+}
+
+canvas{
+  width:100%;
+  display:block;
+}
+
+.pointer{
+  position:absolute;
+  top:-5px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:5;
+  width:0;
+  height:0;
+  border-left:18px solid transparent;
+  border-right:18px
