@@ -6,360 +6,56 @@
 <title>Gift Hub</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  font-family:Arial,sans-serif;
-}
+*{box-sizing:border-box}
 
 body{
-  background:linear-gradient(180deg,#10152d,#080b18);
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(160deg,#080b18,#151b38);
   color:white;
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
 }
 
 .game{
-  width:100%;
   max-width:480px;
-  min-height:100vh;
+  margin:auto;
   padding:18px;
   text-align:center;
 }
 
-.header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:20px;
-}
-
 .logo{
-  font-size:24px;
+  font-size:28px;
   font-weight:bold;
+  color:#ffd43b;
+  margin-bottom:5px;
 }
 
-.level{
-  background:#202747;
-  padding:8px 14px;
-  border-radius:20px;
-  font-size:13px;
+.notice{
+  font-size:11px;
+  color:#aab3cf;
+  margin-bottom:15px;
 }
 
 .balance{
-  margin-top:15px;
-}
-
-.balance-title{
-  color:#9da7c5;
-  font-size:14px;
-}
-
-.money{
-  font-size:48px;
-  font-weight:800;
-  margin:5px 0;
-}
-
-.coin-name{
-  color:#ffd84d;
-  font-weight:bold;
-}
-
-.energy{
-  margin:25px 0 15px;
-}
-
-.energy-top{
-  display:flex;
-  justify-content:space-between;
-  color:#aeb7d1;
-  font-size:13px;
-  margin-bottom:7px;
-}
-
-.energy-bar{
-  height:12px;
-  background:#272e4d;
+  background:#171d38;
+  border:1px solid #30385e;
   border-radius:20px;
-  overflow:hidden;
+  padding:20px;
 }
 
-.energy-fill{
-  height:100%;
-  width:100%;
-  background:#ffd84d;
-  transition:.2s;
+.label{
+  color:#9ba5c4;
+  font-size:13px;
 }
 
-.tap-area{
+#balance{
+  font-size:46px;
+  font-weight:900;
+  color:#ffd43b;
+  margin:8px 0;
+}
+
+.tap{
   margin:25px auto;
-}
-
-.tap-button{
   width:220px;
   height:220px;
-  border-radius:50%;
-  border:8px solid #3b456e;
-  background:radial-gradient(circle,#ffe978,#ffbd24);
-  box-shadow:0 15px 40px rgba(255,195,40,.25);
-  font-size:90px;
-  cursor:pointer;
-  transition:.08s;
-}
-
-.tap-button:active{
-  transform:scale(.92);
-}
-
-.tap-text{
-  margin-top:12px;
-  color:#9da7c5;
-}
-
-.cards{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin-top:25px;
-}
-
-.card{
-  background:#171d38;
-  border:1px solid #2b3458;
-  border-radius:16px;
-  padding:16px;
-  text-align:left;
-}
-
-.card-title{
-  color:#9da7c5;
-  font-size:12px;
-  margin-bottom:6px;
-}
-
-.card-value{
-  font-size:20px;
-  font-weight:bold;
-}
-
-button.action{
-  width:100%;
-  border:0;
-  border-radius:12px;
-  padding:12px;
-  margin-top:10px;
-  background:#ffd84d;
-  color:#171717;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-button.action:disabled{
-  opacity:.5;
-}
-
-.nav{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
-  margin-top:20px;
-}
-
-.nav button{
-  padding:12px 5px;
-  border:1px solid #2b3458;
-  border-radius:12px;
-  background:#171d38;
-  color:white;
-  cursor:pointer;
-}
-
-.message{
-  min-height:22px;
-  margin-top:12px;
-  color:#ffd84d;
-  font-size:13px;
-}
-
-.float{
-  position:fixed;
-  pointer-events:none;
-  font-weight:bold;
-  color:#ffd84d;
-  animation:up 700ms ease-out forwards;
-}
-
-@keyframes up{
-  0%{opacity:1;transform:translateY(0)}
-  100%{opacity:0;transform:translateY(-80px)}
-}
-</style>
-</head>
-
-<body>
-
-<div class="game">
-
-  <div class="header">
-    <div class="logo">🎁 Gift Hub</div>
-    <div class="level">Level <span id="level">1</span></div>
-  </div>
-
-  <div class="balance">
-    <div class="balance-title">YOUR GIFT HUB BALANCE</div>
-    <div class="money" id="balance">$0</div>
-    <div class="coin-name">GIFT COINS</div>
-  </div>
-
-  <div class="energy">
-    <div class="energy-top">
-      <span>⚡ Energy</span>
-      <span id="energyText">100 / 100</span>
-    </div>
-
-    <div class="energy-bar">
-      <div class="energy-fill" id="energyFill"></div>
-    </div>
-  </div>
-
-  <div class="tap-area">
-
-    <button class="tap-button" id="tapButton">
-      🎁
-    </button>
-
-    <div class="tap-text">
-      TAP THE GIFT TO EARN
-    </div>
-
-  </div>
-
-  <div class="message" id="message">
-    Start tapping to collect Gift Coins!
-  </div>
-
-  <div class="cards">
-
-    <div class="card">
-      <div class="card-title">COINS PER TAP</div>
-      <div class="card-value">🪙 <span id="perTap">1</span></div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">TOTAL TAPS</div>
-      <div class="card-value" id="totalTaps">0</div>
-    </div>
-
-  </div>
-
-  <div class="card" style="margin-top:12px;text-align:center">
-
-    <div class="card-title">
-      UPGRADE YOUR GIFT
-    </div>
-
-    <div class="card-value">
-      Level <span id="upgradeLevel">1</span>
-    </div>
-
-    <button class="action" id="upgradeButton">
-      Upgrade — 10 coins
-    </button>
-
-  </div>
-
-  <div class="nav">
-
-    <button id="dailyButton">
-      🎁<br>Daily
-    </button>
-
-    <button id="missionButton">
-      🎯<br>Missions
-    </button>
-
-    <button id="referralButton">
-      👥<br>Invite
-    </button>
-
-  </div>
-
-</div>
-
-<script>
-
-let coins = 0;
-let energy = 100;
-let maxEnergy = 100;
-let coinsPerTap = 1;
-let totalTaps = 0;
-let level = 1;
-let upgradeCost = 10;
-
-const balance = document.getElementById("balance");
-const energyText = document.getElementById("energyText");
-const energyFill = document.getElementById("energyFill");
-const perTap = document.getElementById("perTap");
-const totalTapsDisplay = document.getElementById("totalTaps");
-const levelDisplay = document.getElementById("level");
-const upgradeLevel = document.getElementById("upgradeLevel");
-const upgradeButton = document.getElementById("upgradeButton");
-const message = document.getElementById("message");
-const tapButton = document.getElementById("tapButton");
-
-function update(){
-
-  balance.textContent = "$" + coins.toLocaleString();
-
-  energyText.textContent =
-    energy + " / " + maxEnergy;
-
-  energyFill.style.width =
-    (energy / maxEnergy * 100) + "%";
-
-  perTap.textContent = coinsPerTap;
-
-  totalTapsDisplay.textContent =
-    totalTaps.toLocaleString();
-
-  levelDisplay.textContent = level;
-
-  upgradeLevel.textContent = level;
-
-  upgradeButton.textContent =
-    "Upgrade — " + upgradeCost + " coins";
-
-}
-
-function showMessage(text){
-  message.textContent = text;
-}
-
-function floatingCoins(){
-
-  const number = document.createElement("div");
-
-  number.className = "float";
-
-  number.textContent = "+" + coinsPerTap;
-
-  const rect = tapButton.getBoundingClientRect();
-
-  number.style.left =
-    (rect.left + rect.width / 2) + "px";
-
-  number.style.top =
-    rect.top + "px";
-
-  document.body.appendChild(number);
-
-  setTimeout(()=>{
-    number.remove();
-  },700);
-
-}
-
-tapButton.addEventListener("
+  border-radius:
